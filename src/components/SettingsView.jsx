@@ -3,6 +3,7 @@ import { DAY_NAMES } from '../logic/dates';
 import { CYCLE, DAY_LABEL } from '../logic/defaults';
 import { initialState, normalize, uid } from '../logic/store';
 import { Icon } from './Icons';
+import { syncLabel } from './SyncPill';
 
 function TemplateEditor({ type, state, setState }) {
   const [name, setName] = useState('');
@@ -74,7 +75,48 @@ function TemplateEditor({ type, state, setState }) {
   );
 }
 
-export default function SettingsView({ state, setState }) {
+function CloudCard({ cloud }) {
+  const [text, tone] = syncLabel(cloud);
+  if (cloud.user === undefined) return null;
+  return (
+    <section className="card">
+      <div className="row between">
+        <div className="eyebrow">Cloud backup</div>
+        <span className={`sync-pill ${tone} static`}>
+          <i />
+          {text}
+        </span>
+      </div>
+      {cloud.user ? (
+        <>
+          <div className="account">
+            {cloud.user.photoURL && <img src={cloud.user.photoURL} alt="" referrerPolicy="no-referrer" />}
+            <div className="grow">
+              <div className="ex-name">{cloud.user.displayName || 'Signed in'}</div>
+              <div className="muted small">{cloud.user.email}</div>
+            </div>
+            <button className="link muted" onClick={cloud.signOut}>Sign out</button>
+          </div>
+          <p className="muted small">
+            Every workout, cardio session and step count is saved to your account. Sign in on another device to see the
+            same data. Works offline and catches up when you have signal.
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="muted small">
+            Right now your data only lives in this browser. Sign in to back it up and sync it across your phone and
+            computer. Anything already logged here gets uploaded.
+          </p>
+          <button className="btn primary block" onClick={cloud.signIn}>Sign in with Google</button>
+        </>
+      )}
+      {cloud.error && <p className="small error-text">{cloud.error}</p>}
+    </section>
+  );
+}
+
+export default function SettingsView({ state, setState, cloud }) {
   const fileRef = useRef(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const [msg, setMsg] = useState('');
@@ -110,6 +152,8 @@ export default function SettingsView({ state, setState }) {
       <header className="page-head">
         <h1>Settings</h1>
       </header>
+
+      <CloudCard cloud={cloud} />
 
       <section className="card">
         <div className="eyebrow">Schedule</div>
@@ -164,7 +208,7 @@ export default function SettingsView({ state, setState }) {
         <div className="divider" />
         {confirmReset ? (
           <div className="row gap">
-            <span className="small">Erase all workouts, XP and badges?</span>
+            <span className="small">Erase all workouts, XP and badges{cloud?.user ? ', including your cloud backup' : ''}?</span>
             <button
               className="link danger"
               onClick={() => {

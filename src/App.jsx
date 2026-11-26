@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useStore } from './logic/store';
+import { useCloudSync } from './cloud/useCloudSync';
 import { useToday } from './hooks';
 import { sfx } from './sfx';
 import TodayView from './components/TodayView';
@@ -24,6 +25,7 @@ export default function App() {
   const [reward, setReward] = useState(null);
   const [cardioOpen, setCardioOpen] = useState(false);
   const today = useToday();
+  const cloud = useCloudSync(state, setState);
   const sound = state.settings.sound;
 
   /** Apply an action result of shape { state, reward }. */
@@ -73,11 +75,19 @@ export default function App() {
     <div className="app">
       <main className="page">
         {tab === 'today' && (
-          <TodayView state={state} setState={setState} apply={apply} today={today} onCardio={() => setCardioOpen(true)} />
+          <TodayView
+            state={state}
+            setState={setState}
+            apply={apply}
+            today={today}
+            cloud={cloud}
+            onCardio={() => setCardioOpen(true)}
+            onOpenSettings={() => setTab('settings')}
+          />
         )}
         {tab === 'progress' && <ProgressView state={state} setState={setState} />}
         {tab === 'badges' && <BadgesView state={state} />}
-        {tab === 'settings' && <SettingsView state={state} setState={setState} />}
+        {tab === 'settings' && <SettingsView state={state} setState={setState} cloud={cloud} />}
       </main>
       <nav className="tabbar">
         {TABS.map(([id, label, icon]) => (

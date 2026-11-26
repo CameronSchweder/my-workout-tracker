@@ -258,3 +258,19 @@ form.row .input { flex: 1; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .reward-lines li { opacity: 1; }
 }
+
+/* cloud sync */
+.page-head { align-items: center; }
+.sync-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+.sync-pill.static { cursor: default; }
+.sync-pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.sync-pill.ok i { background: var(--accent); }
+.sync-pill.busy i { background: var(--blue); animation: pulse 1s infinite alternate; }
+.sync-pill.warn { color: var(--gold); }
+.sync-pill.warn i { background: var(--gold); }
+.sync-pill.bad { color: var(--danger); }
+.sync-pill.bad i { background: var(--danger); }
+.account { display: flex; align-items: center; gap: 12px; }
+.account img { width: 40px; height: 40px; border-radius: 50%; }
+.error-text { color: var(--danger); }
+@keyframes pulse { from { opacity: 0.35; } }

@@ -5,6 +5,7 @@ import { planFor, stepStreak, totalXp, weekStatus, weekStreak } from '../logic/s
 import { setSteps, startWorkout } from '../logic/store';
 import { XP } from '../logic/xp';
 import LevelCard from './LevelCard';
+import SyncPill from './SyncPill';
 
 function QuestCard({ state, setState, today, onCardio }) {
   const plan = planFor(today, state.settings.weekStartDay);
@@ -183,12 +184,15 @@ function WeekCard({ state, today }) {
   );
 }
 
-export default function TodayView({ state, setState, apply, today, onCardio }) {
+export default function TodayView({ state, setState, apply, today, cloud, onCardio, onOpenSettings }) {
   return (
     <>
       <header className="page-head">
-        <h1>Rep Quest</h1>
-        <div className="muted small">{fromKey(today).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}</div>
+        <div>
+          <h1>Rep Quest</h1>
+          <div className="muted small">{fromKey(today).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}</div>
+        </div>
+        <SyncPill cloud={cloud} onClick={onOpenSettings} />
       </header>
       <LevelCard xp={totalXp(state)} weekStreak={weekStreak(state, today)} stepStreak={stepStreak(state, today)} />
       <QuestCard state={state} setState={setState} today={today} onCardio={onCardio} />
