@@ -1,0 +1,22 @@
+// Each check receives the result of lifetime(state).
+export const ACHIEVEMENTS = [
+  { id: 'first-rep', icon: '🎯', name: 'First Rep', desc: 'Finish your first workout', check: (c) => c.workouts >= 1 },
+  { id: 'ten-down', icon: '🔟', name: 'Ten Down', desc: 'Finish 10 workouts', check: (c) => c.workouts >= 10 },
+  { id: 'iron-habit', icon: '⛓️', name: 'Iron Habit', desc: 'Finish 50 workouts', check: (c) => c.workouts >= 50 },
+  { id: 'centurion', icon: '🏛️', name: 'Centurion', desc: 'Finish 100 workouts', check: (c) => c.workouts >= 100 },
+  { id: 'overloaded', icon: '⬆️', name: 'Overloaded', desc: 'Hit 9 reps and earn a weight jump', check: (c) => c.overloads >= 1 },
+  { id: 'climber', icon: '🧗', name: 'Climber', desc: 'Earn 10 weight jumps', check: (c) => c.overloads >= 10 },
+  { id: 'summit', icon: '🏔️', name: 'Summit', desc: 'Earn 50 weight jumps', check: (c) => c.overloads >= 50 },
+  { id: 'red-line', icon: '❤️‍🔥', name: 'Red Line', desc: 'Log a hard cardio session', check: (c) => c.hardCardio >= 1 },
+  { id: 'engine', icon: '🫀', name: 'Engine', desc: 'Log 10 hard cardio sessions', check: (c) => c.hardCardio >= 10 },
+  { id: '10k-club', icon: '👟', name: '10K Club', desc: 'Hit your step goal for the first time', check: (c) => c.stepDays >= 1 },
+  { id: 'week-walker', icon: '🚶', name: 'Week Walker', desc: 'Hit your step goal 7 days in a row', check: (c) => c.bestStepStreak >= 7 },
+  { id: 'wanderer', icon: '🧭', name: 'Wanderer', desc: 'Hit your step goal 30 days in a row', check: (c) => c.bestStepStreak >= 30 },
+  { id: 'week-cleared', icon: '🏁', name: 'Week Cleared', desc: '4 lifts and a hard cardio session in one week', check: (c) => c.clearedWeeks >= 1 },
+  { id: 'perfect-week', icon: '💎', name: 'Perfect Week', desc: 'Clear a week and hit your steps all 7 days', check: (c) => c.perfectWeeks >= 1 },
+  { id: 'locked-in', icon: '🔒', name: 'Locked In', desc: 'Clear 4 weeks in a row', check: (c) => c.bestWeekStreak >= 4 },
+  { id: 'heavy-lifter', icon: '🏋️', name: 'Heavy Lifter', desc: 'Move 100,000 lb of total volume', check: (c) => c.volume >= 100000 },
+  { id: 'million', icon: '💰', name: 'Million Pound Club', desc: 'Move 1,000,000 lb of total volume', check: (c) => c.volume >= 1000000 },
+  { id: 'early-bird', icon: '🌅', name: 'Early Bird', desc: 'Start a workout between 4 and 7am', check: (c) => c.earlyBird >= 1 },
+  { id: 'double-digits', icon: '⚡', name: 'Double Digits', desc: 'Reach level 10', check: (c) => c.level >= 10 },
+];
